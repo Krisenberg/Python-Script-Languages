@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "wiki-dependency"
+version = "0.1.0"
+description = ""
+authors = ["Krzysztof Glowacz <you@example.com>"]
+readme = "README.md"
+packages = [{include = "wiki_dependency"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+wikipedia = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
