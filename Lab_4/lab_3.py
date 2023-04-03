@@ -46,7 +46,6 @@ def printer(summarizedTuple):
 
 
 if __name__ == "__main__":
-    dirPath = sys.argv[1]
     #printer(summarizer(runner(Path(dirPath))))
     try:
         printer(summarizer(runner(Path(dirPath))))
