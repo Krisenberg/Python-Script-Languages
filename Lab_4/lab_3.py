@@ -48,6 +48,7 @@ def printer(summarizedTuple):
 if __name__ == "__main__":
     #printer(summarizer(runner(Path(dirPath))))
     try:
+        dirPath = sys.argv[1]
         printer(summarizer(runner(Path(dirPath))))
     except IndexError:
         print("Index error - check if the directory and files aren't empty")
