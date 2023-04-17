@@ -24,10 +24,11 @@ def parse_ssh_log(log_string):
 # Function that takes a log in form of a dictionary and returns a list of ip adresses in its message
 def get_ipv4s_from_log(log_dictionary):
     # Define regex pattern for IP addresses
-    ip_address_pattern = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+    ipv4_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
+    #ip_address_pattern = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
 
     # Find all IP addresses in the log string
-    ip_addresses = re.findall(ip_address_pattern, log_dictionary['message'])
+    ip_addresses = re.findall(ipv4_pattern, log_dictionary['message'])
 
     return ip_addresses
 
