@@ -32,46 +32,46 @@ parser_2_d = subparser_2.add_parser('2d', help='Exercise 2d - get message type')
 parser_2_d.add_argument('--index', type=int, required=True, help='Index of log')
 parser_2_d.set_defaults(func=get_message_type)
 
-subparser_4 = parser.add_subparsers(title='Exercise 4', dest='ex_4')
+# subparser_4 = parser.add_subparsers(title='Exercise 4', dest='ex_4')
 
 # subparser for Exercise 4a
-parser_4_a = subparser_4.add_parser('4a', help='Exercise 4a - n random logs of related to the random user')
+parser_4_a = subparser_2.add_parser('4a', help='Exercise 4a - n random logs of related to the random user')
 parser_4_a.add_argument('-n', '--number', type=int, required=True, help='number of logs to be drawn')
-parser_4_a.set_defaults(func=get_random_logs_from_random_user)
+parser_4_a.set_defaults(func1=get_random_logs_from_random_user)
 
 # subparsers for Exercise 4b
-parser_4_b_i = subparser_4.add_parser('4b_i', help='Exercise 4b_i - mean and standard deviation of ssh connection duration. Statistics related to the whole file')
-parser_4_b_i.set_defaults(func=get_average_and_standard_deviation)
+parser_4_b_i = subparser_2.add_parser('4b_i', help='Exercise 4b_i - mean and standard deviation of ssh connection duration. Statistics related to the whole file')
+parser_4_b_i.set_defaults(func2=get_average_and_standard_deviation)
 
-parser_4_b_ii = subparser_4.add_parser('4b_ii', help='Exercise 4b_ii - mean and standard deviation of ssh connection duration. Statistics grouped by every user')
-parser_4_b_ii.set_defaults(func=get_average_and_standard_deviation_for_users)
+parser_4_b_ii = subparser_2.add_parser('4b_ii', help='Exercise 4b_ii - mean and standard deviation of ssh connection duration. Statistics grouped by every user')
+parser_4_b_ii.set_defaults(func2=get_average_and_standard_deviation_for_users)
 
 # subparser for Exercise 4c
-parser_4_c = subparser_4.add_parser('4c', help='Exercise 4c - most and least frequently logged users')
-parser_4_c.set_defaults(func=get_most_and_least_logs_users)
+parser_4_c = subparser_2.add_parser('4c', help='Exercise 4c - most and least frequently logged users')
+parser_4_c.set_defaults(func2=get_most_and_least_logs_users)
 
 # parsowanie argumentów
 args = parser.parse_args()
-logger = loggingConfig(args.min_level.upper())
-logs = readLogs(args.filePath, parse_ssh_log, logger)
 
-executedFlag = False
-
-if args.show_logs:
-    printLogs(logs)
-    executedFlag = True
-
-if args.top:
-    printLogs(logs, args.top)
-    executedFlag = True
-
-if hasattr(args, 'func'):
-    if args.index:
+if hasattr(args, 'func') or hasattr(args, 'func1') or hasattr(args, 'func2') or args.show_logs or args.top:
+    logger = loggingConfig(args.min_level.upper())
+    logs = readLogs(args.filePath, parse_ssh_log, logger)
+    if args.show_logs:
+        printLogs(logs)
+    elif args.top:
+        printLogs(logs, args.top)
+    elif hasattr(args, 'func'):
         print(args.func(logs[args.index-1]))
-    elif args.number:
-        print(args.func(logs, args.number))
+    elif hasattr(args, 'func1'):
+        print(args.func1(logs, args.number))
     else:
-        print(args.func(logs))
+        print(args.func2(logs))
+        # if (args.index) is not None:
+        #     print(args.func(logs[args.index-1]))
+        # elif args.number is not None:
+        #     print(args.func(logs, args.number))
+        # else:
+        #     print(args.func(logs))
 else:
     parser.print_help()
 #     executedFlag = True
