@@ -1,25 +1,40 @@
 import sys, re
 
+# # Function that takes a line from the log file and returns a dictionary with given keys
+# def parse_ssh_log(log_string):
+#     # Define regex patterns
+#     regex_patterns = {
+#         "timestamp": r"^(\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})",
+#         "process_name": r"\b(\w+)\[\d+\]:",
+#         "source_ip": r"\[([\d\.]+)\]",
+#         "message": r"^\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}\s+\w+\s+\w+\[\d+\]:\s+(.*)"
+#     }
+
+#     # Initialize dictionary to store parsed log
+#     log_dict = {}
+
+#     # Iterate over regex patterns, apply them to the log string and store the result in the dictionary
+#     for key, pattern in regex_patterns.items():
+#         match = re.search(pattern, log_string)
+#         if match:
+#             log_dict[key] = match.group(1)
+
+#     return log_dict
+
 # Function that takes a line from the log file and returns a dictionary with given keys
 def parse_ssh_log(log_string):
-    # Define regex patterns
-    regex_patterns = {
-        "timestamp": r"^(\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})",
-        "process_name": r"\b(\w+)\[\d+\]:",
-        "source_ip": r"\[([\d\.]+)\]",
-        "message": r"^\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}\s+\w+\s+\w+\[\d+\]:\s+(.*)"
-    }
-
-    # Initialize dictionary to store parsed log
-    log_dict = {}
-
-    # Iterate over regex patterns, apply them to the log string and store the result in the dictionary
-    for key, pattern in regex_patterns.items():
-        match = re.search(pattern, log_string)
-        if match:
-            log_dict[key] = match.group(1)
-
-    return log_dict
+    # Define regex pattern
+    pattern = r'^(.+)\s(\d+)\s(\d{2}:\d{2}:\d{2})\s(.+)\s(sshd)\[(\d+)\]:\s(.+)$'
+    match = re.match(pattern, log_string)
+    stringDate = match.group(1) + ' ' + match.group(2) + ' ' + match.group(3)
+    # fullDate is a datetime object in format "1900 Jan 01 00:00:00" (year is not important)
+    host = match.group(4)
+    component = match.group(5)
+    pid = match.group(6)
+    message = match.group(7)
+    namesList = ['timestamp','host','process_name','pid','message']
+    valuesList = [stringDate, host, component, int(pid), message]
+    return dict(zip(namesList, valuesList))
 
 # Function that takes a log in form of a dictionary and returns a list of ip adresses in its message
 def get_ipv4s_from_log(log_dictionary):
@@ -60,13 +75,6 @@ def get_user_from_log(log_dictionary):
                 return match.group(1)
         
     return None
-    
-    # for pattern in [r"for (\w+)", r"user (\w+)"]:
-    #     match = re.search(pattern, message)
-    #     if match:
-    #         return match.group(1)
-    
-    # return None
 
 # Function that takes a message as a string and returns its type as a string
 def get_message_type(message):
