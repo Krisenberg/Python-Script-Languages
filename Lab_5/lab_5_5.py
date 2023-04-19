@@ -54,7 +54,7 @@ parser_4_c.set_defaults(func2=get_most_and_least_logs_users)
 # parsing the arguments
 args = parser.parse_args()
 
-if hasattr(args, 'func') or hasattr(args, 'func2d') or hasattr(args, 'func1') or hasattr(args, 'func2') or args.show_logs or args.top:
+if hasattr(args, 'func') or hasattr(args, 'func2d') or hasattr(args, 'func1') or hasattr(args, 'func2') or args.show_logs or (args.top is not None):
     logger = loggingConfig(args.min_level.upper())
     logs = readLogs(args.filePath, parse_ssh_log, logger)
     if args.clear:
@@ -64,8 +64,8 @@ if hasattr(args, 'func') or hasattr(args, 'func2d') or hasattr(args, 'func1') or
     print('Result:')
     if args.show_logs:
         printLogs(logs)
-    elif args.top:
-        printLogs(logs, args.top)
+    elif (args.top is not None):
+        printLogs(logs, number=args.top)
     elif hasattr(args, 'func'):
         print(args.func(logs[args.index-1]))
     elif hasattr(args, 'func2d'):
