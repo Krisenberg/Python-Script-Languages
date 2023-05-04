@@ -1,5 +1,7 @@
 from functools import reduce
 
+# Proba
+
 def acronym(stringList):
     firstLetters = list(map(lambda x: x[0] if len(x)>0 else '',stringList))
     return reduce(lambda x, y: x+y, firstLetters)
