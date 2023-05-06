@@ -1,9 +1,14 @@
 import functools
 import random
+import string
 
+""" If the optional initializer is present, it is placed before the items of the iterable 
+    in the calculation, and serves as a default when the iterable is empty. If initializer 
+    is not given and iterable contains only one item, the first item is returned."""
 def acronym(stringList):
-    firstLetters = list(map(lambda x: x[0] if len(x)>0 else '',stringList))
-    return reduce(lambda x, y: x+y, firstLetters)
+    # firstLetters = list(map(lambda x: x[0] if len(x)>0 else '',stringList))
+    # return functools.reduce(lambda x, y: x+y, firstLetters)
+    return functools.reduce(lambda x, y: x+y[0] if len(y)>0 else x+'', stringList, '')
 
 def median(numbers):
     sorted_numbers = sorted(numbers)
@@ -11,118 +16,27 @@ def median(numbers):
     median_index = list_len // 2
 
     try:
-        median = sorted_numbers[median_index] if list_len % 2 == 1 else (sorted_numbers[median_index-1]+sorted_numbers[median_index])/2
-        return median
+        return sorted_numbers[median_index] if list_len % 2 == 1 else (sorted_numbers[median_index-1]+sorted_numbers[median_index])/2
     except IndexError:
         return "List is empty!"
     
-# def sqrt(x, epsilon):
+def sqrt(x, epsilon=0.1, start=0):
+    starting_point = random.uniform(0,x/2) if start<=0 else start
+    def innerHelper (y):
+        return y if y>=0 and abs(y**2 - x)<epsilon else innerHelper(0.5*(y+(x/y)))
+    return (innerHelper(starting_point) if x>=0 and epsilon>=0 else "x and epsilon must be greater or equal to 0")
 
 
+def make_alpha_dict(words):
+    words = words.replace(',','')
+    words = words.replace('.','')
+    letters = set([words[i] for i in range(len(words)) if not (words[i].isspace())])
+    dictionary = {key: list(filter(lambda word: key in word, words.split())) for key in letters}
+    return dictionary
 
+def flatten(inputList):
+    return [elem for item in inputList for elem in flatten(item)] if (type(inputList) is list or type(inputList) is tuple) else [inputList]
 
-
-# Second task
-
-def forall(pred, iterable):
-    return all(map(pred, iterable))
-
-def exists(pred, iterable):
-    return any(map(pred, iterable))
-
-def atleast(n, pred, iterable):
-    return len(list(filter(pred, iterable))) >= n
-
-def atmost(n, pred, iterable):
-    return len(list(filter(pred, iterable))) <= n
-
-# # Test task 2
-# if __name__ == "__main__":
-#     iterable = [1,2,3,4,5,6,7,8,9,10]
-#     pred = lambda x: x > 0
-#     n = 6
-#     print(forall(pred, iterable))
-#     print(exists(pred, iterable))
-#     print(atleast(n, pred, iterable))
-#     print(atmost(n, pred, iterable))
-
-# Third task
-
-class PasswordGenerator:
-    def __init__(self, length, charset, count):
-        self.length = length
-        self.charset = charset
-        self.count = count
-        self.i = 0
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.i < self.count:
-            self.i += 1
-            return ''.join(random.choice(self.charset) for i in range(self.length))
-        else:
-            raise StopIteration
-        
-# # Test task 3
-# if __name__ == "__main__":
-#     password_generator = PasswordGenerator(20, "abc", 4)
-#     print(next(password_generator))
-#     for password in password_generator:
-#         print(password)
-#     print(next(password_generator))
-
-# Fourth task
-
-def make_generator(f):
-    def generator():
-        i = 1
-        while True:
-            yield f(i)
-            i += 1
-    return generator
-
-def fibonacci(n):
-    if n <= 2:
-        return 1
-    else:
-        return fibonacci(n-1) + fibonacci(n-2)
-    
-# # Test task 4
-# if __name__ == "__main__":
-#     print("Fibonacci:")
-#     generator_f = make_generator(fibonacci)
-#     generator_f = generator_f()
-#     for i in range (10):
-#         print(next(generator_f))
-#     print("Lambda:")
-#     generator_l = make_generator(lambda x: x+1)
-#     generator_l = generator_l()
-#     for i in range (10):
-#         print(next(generator_l))
-
-# Fifth task
-
-def make_generator_mem(f):
-    @functools.cache
-    def memoized_f(n):
-        return f(n)
-    return make_generator(memoized_f)
-
-        
-# # Test task 5
-# if __name__ == "__main__":
-#     print("Fibonacci:")
-#     generator_f = make_generator_mem(fibonacci)
-#     generator_f = generator_f()
-#     for i in range (10):
-#         print(next(generator_f))
-#     print("Lambda:")
-#     generator_l = make_generator_mem(lambda x: x+1)
-#     generator_l = generator_l()
-#     for i in range (10):
-#         print(next(generator_l))
     
 # Sixth task
 
