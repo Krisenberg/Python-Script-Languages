@@ -21,37 +21,37 @@ def test_fib_nums_without_cache():
     fib_generator = generator_closures.make_generator(generator_closures.fibonacci)()
     last_num1 = 0
     start_time_1 = time.time()
-    for i in range(33):
+    for i in range(35):
         last_num1 = next(fib_generator)
     end_time_1 = time.time()
     fib_generator = generator_closures.make_generator(generator_closures.fibonacci)()
     last_num2 = 0
     start_time_2 = time.time()
-    for i in range(33):
+    for i in range(35):
         last_num2 = next(fib_generator)
     end_time_2 = time.time()
 
     total_1 = end_time_1 - start_time_1
     total_2 = end_time_2 - start_time_2
 
-    assert (last_num1 == 3524578 and last_num2 == 3524578 and total_1 > 3 and total_2 > 3)
+    assert (last_num1 == 9227465 and last_num2 == 9227465 and total_1 > 3 and total_2 > 3)
 
 def test_fib_nums_with_cache():
     sys.setrecursionlimit(1000)
     fib_generator = generator_closures.make_generator_mem(generator_closures.fibonacci)()
     last_num1 = 0
     start_time_1 = time.time()
-    for i in range(33):
+    for i in range(35):
         last_num1 = next(fib_generator)
     end_time_1 = time.time()
     fib_generator = generator_closures.make_generator_mem(generator_closures.fibonacci)()
     last_num2 = 0
     start_time_2 = time.time()
-    for i in range(33):
+    for i in range(35):
         last_num2 = next(fib_generator)
     end_time_2 = time.time()
 
     total_1 = end_time_1 - start_time_1
     total_2 = end_time_2 - start_time_2
 
-    assert (last_num1 == 3524578 and last_num2 == 3524578 and total_1 > 3 and total_2 < 0.01)
+    assert (last_num1 == 9227465 and last_num2 == 9227465 and total_1 > 3 and total_2 < 0.01)
