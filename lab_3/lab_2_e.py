@@ -24,5 +24,6 @@ if __name__ == "__main__":
             print("List Two")
             for line in list2:
                 print(line)
+                
     except TypeError:
                 print("Invalid parameter")
