@@ -447,3 +447,19 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.vscode/settings.json
+Lab_1/FirstJupyter.ipynb
+Lab_1/.ipynb_checkpoints/FirstJupyter-checkpoint.ipynb
+Lab_1/wiki_dependency/README.md
+Lab_1/wiki_dependency/tests/__init__.py
+Lab_2/NASA
+Lab_2/pyproject.toml
+lab_3/Lab_3_Glowacz_Luberda.zip
+lab_3/NASA
+lab_3/NASA2.txt
+lab_3/NASA3.txt
+Lab_4/FileAnalyzer/Lista_4_Glowacz_Luberda.zip
+Lab_4/Files/1.txt
+Lab_4/Files/2.txt
+Lab_4/Files/Test_file.txt
+Lab_6/logs.txt
