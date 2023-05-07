@@ -47,15 +47,15 @@ def make_generator_mem(f):
     return make_generator(global_mem_f[0])
 
         
-# # Test task 5
-# if __name__ == "__main__":
-#     print("Fibonacci:")
-#     generator_f = make_generator_mem(fibonacci)
-#     generator_f = generator_f()
-#     for i in range (10):
-#         print(next(generator_f))
-#     print("Lambda:")
-#     generator_l = make_generator_mem(lambda x: x+1)
-#     generator_l = generator_l()
-#     for i in range (10):
-#         print(next(generator_l))
+# Test task 5
+if __name__ == "__main__":
+    print("Fibonacci:")
+    generator_f = make_generator_mem(fibonacci)
+    generator_f = generator_f()
+    for i in range (10):
+        print(next(generator_f))
+    print("Lambda:")
+    generator_l = make_generator_mem(lambda x: x+1)
+    generator_l = generator_l()
+    for i in range (10):
+        print(next(generator_l))

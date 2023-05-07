@@ -22,10 +22,10 @@ class PasswordGenerator:
         else:
             raise StopIteration
         
-# # Test task 3
-# if __name__ == "__main__":
-#     password_generator = PasswordGenerator(20, "abc", 4)
-#     print(next(password_generator))
-#     for password in password_generator:
-#         print(password)
-#     print(next(password_generator))
+# Test task 3
+if __name__ == "__main__":
+    password_generator = PasswordGenerator(10, 5, "abc", 100)
+    print(next(password_generator))
+    for password in password_generator:
+        print(password)
+    print(next(password_generator))

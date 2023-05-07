@@ -37,6 +37,3 @@ def make_alpha_dict(words):
 def flatten(inputList):
     return [elem for item in inputList for elem in flatten(item)] if (type(inputList) is list or type(inputList) is tuple) else [inputList]
 
-    
-# Sixth task
-
