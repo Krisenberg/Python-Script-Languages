@@ -8,7 +8,7 @@ import string
 def acronym(stringList):
     # firstLetters = list(map(lambda x: x[0] if len(x)>0 else '',stringList))
     # return functools.reduce(lambda x, y: x+y, firstLetters)
-    return functools.reduce(lambda x, y: x+y[0] if len(y)>0 else x+'', stringList, '')
+    return functools.reduce(lambda x, y: x+y[0].upper() if len(y)>0 else x+'', stringList, '')
 
 def median(numbers):
     sorted_numbers = sorted(numbers)

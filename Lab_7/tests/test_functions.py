@@ -11,7 +11,7 @@ from src import functions
     [
         (["Zakład", "Ubezpieczeń", "Społecznych"], "ZUS"),
         (["Polski", "Związek", "Piłki", "Nożnej"], "PZPN"),
-        (["Aaa", "bbb", "", "Dddd"], "AbD")
+        (["Aaa", "bbb", "", "Dddd"], "ABD")
     ] 
 )
 def test_acronym(full_name, acronym):
