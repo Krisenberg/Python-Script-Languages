@@ -4,7 +4,7 @@ import time
 import logging
 
 #insert the path of modules folder
-sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_7")
+sys.path.append("C:\\Users\\qmati\\Documents\\Krisenberg\\Python-Script-Languages\\Lab_7")
 
 from src import decorator_logging
 
