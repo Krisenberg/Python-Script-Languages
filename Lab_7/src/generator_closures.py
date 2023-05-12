@@ -44,6 +44,8 @@ def make_generator_mem(f):
     global global_mem_f
     if global_mem_f[1]==False:
         global_mem_f = (memoized_f(f), True)
+    elif global_mem_f[0].__name__ != memoized_f(f).__name__:
+        global_mem_f = (memoized_f(f), True)
     return make_generator(global_mem_f[0])
 
         
