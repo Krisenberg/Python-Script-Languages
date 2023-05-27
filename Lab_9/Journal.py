@@ -3,19 +3,19 @@ from Utils import get_message_type
 from datetime import datetime
 import ipaddress
 import re
-from typing import List, Iterator
-import mypy
+from typing import List, Iterator, Optional
+#import mypy
 
 class SSHLogJournal:
 
-    def __init__(self, logList : List[SSHLogEntry] = []):
+    def __init__(self, logList : List[SSHLogEntry] = []) -> None:
         self.logList : List[SSHLogEntry] = logList
 
     def __len__(self) -> int: return len(self.logList)
 
     def __iter__(self) -> Iterator[str]: return iter(self.logList)
 
-    def __contains__(self, log) -> bool:
+    def __contains__(self, log: SSHLogEntry) -> bool:
         return log in self.logList
     
     def append(self, raw_log : str) -> bool:
@@ -25,8 +25,7 @@ class SSHLogJournal:
             return True
         return False
         
-    # Nie wiem
-    def get_by_host(self, key_host=None):
+    def get_by_host(self, key_host: Optional[str] = None) -> List[SSHLogEntry]:
         return [entry for entry in self.logList if entry.host == key_host]
 
     def get_by_timestamps(self, timestamp1 : str, timestamp2 : str) -> List[SSHLogEntry]:
