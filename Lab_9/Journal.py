@@ -1,9 +1,10 @@
 from Factory import *
+from LogEntries import SSHLogEntry
 from Utils import get_message_type
 from datetime import datetime
 import ipaddress
 import re
-from typing import List, Iterator, Optional
+from typing import List, Iterator, Optional, Match, Union
 #import mypy
 
 class SSHLogJournal:
@@ -11,9 +12,11 @@ class SSHLogJournal:
     def __init__(self, logList : List[SSHLogEntry] = []) -> None:
         self.logList : List[SSHLogEntry] = logList
 
-    def __len__(self) -> int: return len(self.logList)
+    def __len__(self) -> int: 
+        return len(self.logList)
 
-    def __iter__(self) -> Iterator[str]: return iter(self.logList)
+    def __iter__(self) -> Iterator[SSHLogEntry]: 
+        return iter(self.logList)
 
     def __contains__(self, log: SSHLogEntry) -> bool:
         return log in self.logList
@@ -37,27 +40,28 @@ class SSHLogJournal:
                 innerList.append(entry)
         return innerList
     
-    # Nie wiem
-    def __getattr__(self, attr):
+    def __getattr__(self, attr: str) -> List[SSHLogEntry]:
         if attr.startswith('ip_'):
-            ip = attr[3:].replace("_", ".")
-            ipv4 = ipaddress.IPv4Address(ip)
+            ip: str = attr[3:].replace("_", ".")
+            ipv4: ipaddress.IPv4Address = ipaddress.IPv4Address(ip)
             return [entry for entry in self.logList if entry.get_ipv4()==ipv4]
         elif attr.startswith('index_'):
-            pid = int(attr[6:])
+            pid: int = int(attr[6:])
             return [entry for entry in self.logList if entry.pid==pid]
         elif attr.startswith('date_'):
-            date_pattern = r'(.+)\s(\d+)'
-            dateStr = attr[5:].replace("_"," ")
-            match = re.search(date_pattern, dateStr)
+            date_pattern: str = r'(.+)\s(\d+)'
+            dateStr: str = attr[5:].replace("_"," ")
+            match: Optional[Match[str]] = re.search(date_pattern, dateStr)
             if match:
-                date = datetime.strptime(dateStr,"%b %d")
+                date: datetime = datetime.strptime(dateStr,"%b %d")
                 return [entry for entry in self.logList if entry.timestamp.month == date.month and entry.timestamp.day == date.day]
-        else:
-            raise AttributeError(f"'SSH Journal' has no attribute '{attr}'")
+        raise AttributeError(f"'SSH Journal' has no attribute '{attr}'")
         
-    def __getitem__(self, key):
+    def __getitem__(self, key: Union[slice, int]) -> Union[List[SSHLogEntry], 'SSHLogEntry']:
         if isinstance(key, slice):
+            start: int
+            stop: int
+            step: int
             start, stop, step = key.indices(len(self.logList))
             return [self.logList[ii] for ii in range(start,stop,step)]
         elif isinstance(key, int):
@@ -65,9 +69,10 @@ class SSHLogJournal:
         raise ValueError("Invalid index provided")
 
 if __name__ == "__main__":
-    journal = SSHLogJournal()
-    with open("logs.txt", 'r') as f:
-        lines = f.readlines()
+    journal: SSHLogJournal = SSHLogJournal()
+    path_to_logs: str = "C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9\\logs.txt"
+    with open(path_to_logs, 'r') as f:
+        lines: List[str] = f.readlines()
         for line in lines:
             journal.append(line)
     for log in journal:
@@ -75,7 +80,7 @@ if __name__ == "__main__":
     # filteredData = journal.get_by_host('zhangyan')
     # for data in filteredData:
     #     print(data)
-    filteredData = journal.get_by_timestamps('Dec 10 7:00:00', 'Dec 10 23:55:00')
+    filteredData: List[SSHLogEntry] = journal.get_by_timestamps('Dec 10 7:00:00', 'Dec 10 23:55:00')
     for data in filteredData:
         print(data)
     # filteredData = journal.ip_103_99_0_122
