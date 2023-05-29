@@ -3,10 +3,9 @@ import sys
 from datetime import datetime
 
 sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
-# from src import decorator_logging
 
-from Factory import Factory_Manager
-from LogEntries import SSHLogEntry
+from src.Factory import Factory_Manager
+from src.LogEntries import SSHLogEntry
 
 def test_timestamp_extraction():
     raw_log = 'Dec 10 07:07:38 LabSZ sshd[24206]: pam_unix(sshd:auth): check pass; user unknown'

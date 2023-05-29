@@ -1,10 +1,9 @@
 import pytest
 import sys
 
-#insert the path of modules folder
 sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
-from Journal import SSHLogJournal
-from LogEntries import SSHLogEntryAcceptedPass, SSHLogEntryError, SSHLogEntryFailedPass, SSHLogOther 
+from src.Journal import SSHLogJournal
+from src.LogEntries import SSHLogEntryAcceptedPass, SSHLogEntryError, SSHLogEntryFailedPass, SSHLogOther 
 
 @pytest.fixture(scope='module')
 def journal():

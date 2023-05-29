@@ -1,6 +1,9 @@
 # Script to help run a script
+import sys
+sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
+
 import re
-from Utils import get_user_from_log
+from src.Utils import get_user_from_log
 from datetime import datetime
 
 # Function that parses a log represented by a string to a dictionary

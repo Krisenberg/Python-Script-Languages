@@ -3,10 +3,9 @@ import sys
 from ipaddress import IPv4Address
 
 sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
-# from src import decorator_logging
 
-from Factory import Factory_Manager
-from LogEntries import SSHLogEntry
+from src.Factory import Factory_Manager
+from src.LogEntries import SSHLogEntry
 
 
 class TestIPv4Addresses:

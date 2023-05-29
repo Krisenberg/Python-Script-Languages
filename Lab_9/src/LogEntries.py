@@ -1,9 +1,12 @@
 # First task
+import sys
+sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
+
 import re, sys
 import ipaddress
 from ipaddress import AddressValueError
-from parse_log import parse_ssh_log
-from Utils import *
+from src.parse_log import parse_ssh_log
+from src.Utils import *
 import abc
 from datetime import datetime
 from typing import Optional, Dict, Any, List, Tuple
