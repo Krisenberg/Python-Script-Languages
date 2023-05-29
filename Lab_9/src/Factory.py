@@ -1,6 +1,9 @@
+import sys
+sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
+
 import abc
-from LogEntries import *
-from Utils import get_message_type
+from src.LogEntries import *
+from src.Utils import get_message_type
 
 class Factory(metaclass=abc.ABCMeta):
     @abc.abstractmethod

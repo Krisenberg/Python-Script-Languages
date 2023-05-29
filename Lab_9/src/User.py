@@ -1,9 +1,12 @@
+import sys
+sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
+
 import re
-from Journal import SSHLogJournal
-from parse_log import parse_ssh_log
-from LogEntries import *
-from Journal import SSHLogJournal
-from Utils import *
+from src.Journal import SSHLogJournal
+from src.parse_log import parse_ssh_log
+from src.LogEntries import *
+from src.Journal import SSHLogJournal
+from src.Utils import *
 
 class SSHUser:
     def __init__(self, username, last_login_date):
@@ -20,7 +23,8 @@ class SSHUser:
     
 if __name__ == '__main__':
     journal = SSHLogJournal()
-    with open("logs.txt", 'r') as f:
+    file_path = 'C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9\\logs.txt'
+    with open(file_path, 'r') as f:
         lines = f.readlines()
         for line in lines:
             journal.append(line)
@@ -40,7 +44,9 @@ if __name__ == '__main__':
             
     list = journal.logList + users
     for sth in list:
-        sth.validate()
+        validation = sth.validate()
+        if not validation:
+            print(f'False, {sth}')
     
     
         

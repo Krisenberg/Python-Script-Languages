@@ -1,6 +1,9 @@
-from Factory import *
-from LogEntries import SSHLogEntry
-from Utils import get_message_type
+import sys
+sys.path.append("C:\\Users\\Kris\\Documents\\Studia\\Semestr_IV\\Jezyki_skryptowe_L\\Laboratoria\\Lab_9")
+
+from src.Factory import *
+from src.LogEntries import SSHLogEntry
+from src.Utils import get_message_type
 from datetime import datetime
 import ipaddress
 import re
