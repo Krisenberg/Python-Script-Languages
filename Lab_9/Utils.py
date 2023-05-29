@@ -51,18 +51,18 @@ def get_message_type(message):
     # Check for matching patterns in the message
     if success_pattern.search(message):
         return "Authentication succeeded."
+    elif password_fail_pattern.search(message):
+        return "Incorrect password."
+    elif error_pattern.search(message):
+        return "Error."
     elif fail_pattern.search(message):
         return "Authentication failed."
     elif disconnect_pattern.search(message):
         return "Disconnected."
-    elif password_fail_pattern.search(message):
-        return "Incorrect password."
     elif username_fail_pattern.search(message):
         return "Incorrect username."
     elif break_in_pattern.search(message):
         return "Break-in attempt."
-    elif error_pattern.search(message):
-        return "Error."
     else:
         return "Other"
     

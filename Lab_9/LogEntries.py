@@ -103,7 +103,7 @@ class SSHLogEntryAcceptedPass(SSHLogEntry):
 
     def validate(self) -> bool:
         log_dict: Dict[str, Any] = parse_ssh_log(self._raw_log)
-        attributes: Optional[Tuple[str,str]] = failedPasswordArgs(log_dict['message'])
+        attributes: Optional[Tuple[str,str]] = acceptedPasswordArgs(log_dict['message'])
         if attributes is not None: 
             return (self.timestamp == log_dict['timestamp']
                     and self.host == get_user_from_log(log_dict['message'])
