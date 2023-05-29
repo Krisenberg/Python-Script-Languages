@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QPlainTextEdit, QTextEdit, QMainWindow, QListWidget, QListWidgetItem, QMessageBox
 from PySide6.QtGui import QColor, QPalette
+from utils import parse_ssh_log, get_user_from_log
 
 class LogStorage:
     def __init__(self):
@@ -21,7 +22,7 @@ class LogViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Log Viewer')
-        self.setGeometry(500, 500, 500, 500)
+        self.setGeometry(200, 30, 800, 800)
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(255, 255, 255))
     
@@ -46,10 +47,33 @@ class LogViewer(QMainWindow):
         self.filter_button.clicked.connect(self.print_filtrated_logs)
 
         self.logs_list = QListWidget()
+        self.timestamp_label = QLabel('Timestamp:')
+        self.timestamp_edit = QLineEdit()
+        self.timestamp_edit.setReadOnly(True)
+        self.host_label = QLabel('Host:')
+        self.host_edit = QLineEdit()
+        self.host_edit.setReadOnly(True)
+        self.component_label = QLabel('Component:')
+        self.component_edit = QLineEdit()
+        self.component_edit.setReadOnly(True)
+        self.pid_label = QLabel('PID:')
+        self.pid_edit = QLineEdit()
+        self.pid_edit.setReadOnly(True)
+        self.message_label = QLabel('Message:')
+        self.message_edit = QTextEdit()
+        self.message_edit.setReadOnly(True)
         self.logs_list.itemClicked.connect(self.showLogDetails)
         
         self.clear_button = QPushButton('Clear logs')
         self.clear_button.clicked.connect(self.clearLogs)
+
+        self.next_button = QPushButton('Next')
+        self.next_button.setEnabled(False)
+        self.next_button.clicked.connect(self.showNextLog)
+        self.previous_button = QPushButton('Previous')
+        self.previous_button.setEnabled(False)
+        self.previous_button.clicked.connect(self.showPreviousLog)
+        self.current_log_index = -1
 
         self.layout = QVBoxLayout()
         path_layout = QHBoxLayout()
@@ -66,7 +90,23 @@ class LogViewer(QMainWindow):
         self.layout.addLayout(filter_layout)
         self.layout.addWidget(self.logs_list)
         self.layout.addWidget(self.clear_button)
-
+        details_layout = QVBoxLayout()
+        details_layout.addWidget(self.timestamp_label)
+        details_layout.addWidget(self.timestamp_edit)
+        details_layout.addWidget(self.host_label)
+        details_layout.addWidget(self.host_edit)
+        details_layout.addWidget(self.component_label)
+        details_layout.addWidget(self.component_edit)
+        details_layout.addWidget(self.pid_label)
+        details_layout.addWidget(self.pid_edit)
+        details_layout.addWidget(self.message_label)
+        details_layout.addWidget(self.message_edit)
+        self.layout.addLayout(details_layout)
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.previous_button)
+        button_layout.addWidget(self.next_button)
+        self.layout.addLayout(button_layout)
+        
         self.main_widget.setLayout(self.layout)
 
     def loadLogs(self):
@@ -79,6 +119,8 @@ class LogViewer(QMainWindow):
         for log in logs:
             item = QListWidgetItem(log)
             self.logs_list.addItem(item)
+        self.next_button.setEnabled(len(logs) > 0)
+        self.previous_button.setEnabled(len(logs) > 0)
             
     def print_filtrated_logs(self):
         logs = self.storage.giveLogs()
@@ -90,60 +132,44 @@ class LogViewer(QMainWindow):
             logs = [log for log in logs if self.parse_ssh_log(log)['timestamp'] >= start_time and self.parse_ssh_log(log)['timestamp'] <= end_time]
         self.logs_list.clear()
         for log in logs:
-            item = QListWidgetItem(log)
+            item = QListWidgetItem(log) 
             self.logs_list.addItem(item)
+        self.next_button.setEnabled(len(logs) > 0)
+        self.previous_button.setEnabled(len(logs) > 0)
         
     def clearLogs(self):
-        self.logs_list.clear()
+        self.logs_list.clear()    
+    
+    def showNextLog(self):
+        if self.current_log_index + 1 < self.logs_list.count():
+            self.current_log_index += 1
+            log_item = self.logs_list.item(self.current_log_index)
+            self.logs_list.setCurrentItem(log_item)
+            self.showLogDetails(log_item)
+            self.previous_button.setEnabled(True)
+
+        self.next_button.setEnabled(self.current_log_index + 1 < self.logs_list.count())
+
+    def showPreviousLog(self):
+        if self.current_log_index - 1 >= 0:
+            self.current_log_index -= 1
+            log_item = self.logs_list.item(self.current_log_index)
+            self.logs_list.setCurrentItem(log_item)
+            self.showLogDetails(log_item)
+            self.next_button.setEnabled(True)
+
+        self.previous_button.setEnabled(self.current_log_index - 1> 0)
         
     def showLogDetails(self, item):
-        log_details = self.parse_ssh_log(item.text())
-        message_box = QMessageBox()
-        message_box.setWindowTitle('Log Details')
-        message_box.setText(f"Timestamp: {log_details['timestamp']}\nHost: {log_details['host']}\nComponent: {log_details['component']}\nPID: {log_details['pid']}\nMessage: {log_details['message']}")
-        message_box.exec()
-
-    def get_user_from_log(self, message):
-        # If message is empty return None
-        if message is None:
-            return None
-        # Define regex pattern for username
-        username_pattern = r"user (\w+)"
-        match = re.search(username_pattern, message)
-        if match:
-            return match.group(1)
-        # If previous pattern didn't match try another one
-        else:
-            username_pattern = r"user=(\w+)"
-            match = re.search(username_pattern, message)
-            if match:
-                return match.group(1)
-            # If previous pattern didn't match try another one
-            else:
-                username_pattern = r"for (\w+)"
-                match = re.search(username_pattern, message)
-                if match:
-                    return match.group(1)
-        return None
-
-
-    # Function that parses a log represented by a string to a dictionary
-    def parse_ssh_log(self, log_string):
-        # Define regex pattern
-        pattern = r'^(.+)\s(\d+)\s(\d{2}:\d{2}:\d{2})\s(.+)\s(sshd)\[(\d+)\]:\s(.+)$'
-        match = re.match(pattern, log_string)
-        stringDate = match.group(1) + ' ' + match.group(2) + ' ' + match.group(3)
-        # fullDate is a datetime object in format "1900 Jan 01 00:00:00" (year is not important)
-        date = datetime.strptime(stringDate,"%b %d %H:%M:%S")
-        component = match.group(5)
-        pid = match.group(6)
-        message = match.group(7)
-        host = self.get_user_from_log(message)
-        namesList = ['timestamp','host','component','pid','message']
-        valuesList = [date, host, component, int(pid), message]
-        return dict(zip(namesList, valuesList))
-
-
+        log_details = parse_ssh_log(item.text())
+        self.current_log_index = self.logs_list.currentRow()
+        self.next_button.setEnabled(self.current_log_index + 1 < self.logs_list.count())
+        self.previous_button.setEnabled(self.current_log_index > 0)
+        self.timestamp_edit.setText(log_details['timestamp'].strftime('%m-%d %H:%M:%S'))
+        self.host_edit.setText(log_details['host'])
+        self.component_edit.setText(log_details['component'])
+        self.pid_edit.setText(str(log_details['pid']))
+        self.message_edit.setText(log_details['message'])
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
