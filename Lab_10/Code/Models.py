@@ -47,7 +47,7 @@ class Station(Base):
     __tablename__ = "stations"
 
     station_id: Mapped[int] = mapped_column(primary_key=True)
-    station_name: Mapped[str] = mapped_column(String(30))
+    station_name: Mapped[str] = mapped_column(String(50), unique=True)
 
     rentals_start: Mapped[List['Rental']] = relationship(back_populates='rental_station',
                                                             foreign_keys="[Rental.rental_station_id]")
