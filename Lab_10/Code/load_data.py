@@ -7,11 +7,13 @@ from sqlalchemy import select
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from Models import Rental, Bike, Station, Base
 from typing import Dict
-import app
 from datetime import datetime
 import logging
+
+from Models import Rental, Bike, Station, Base
+import app
+from create_database import create_db
 
 def try_to_add_object(obj, session):
     try:
@@ -75,8 +77,9 @@ if __name__ == "__main__":
         if log_level is None:
             log_level = 'WARNING'
         app.set_logger(logging.getLogger('sqlalchemy.engine'), log_level)
-        db_engine = create_engine(f"sqlite:///{db_name}.db", echo=False)
-        Base.metadata.create_all(db_engine)
+        # db_engine = create_engine(f"sqlite:///{db_name}.db", echo=False)
+        # Base.metadata.create_all(db_engine)
+        db_engine = create_db(db_name, False)
         load_file(data_dir_path, file_name, db_engine)
         
     else:
