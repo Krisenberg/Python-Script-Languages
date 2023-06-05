@@ -129,7 +129,7 @@ class LogViewer(QMainWindow):
         if start_time_str and end_time_str:
             start_time = datetime.strptime(start_time_str, '%m-%d %H:%M:%S')
             end_time = datetime.strptime(end_time_str, '%m-%d %H:%M:%S')
-            logs = [log for log in logs if self.parse_ssh_log(log)['timestamp'] >= start_time and self.parse_ssh_log(log)['timestamp'] <= end_time]
+            logs = [log for log in logs if parse_ssh_log(log)['timestamp'] >= start_time and parse_ssh_log(log)['timestamp'] <= end_time]
         self.logs_list.clear()
         for log in logs:
             item = QListWidgetItem(log) 
