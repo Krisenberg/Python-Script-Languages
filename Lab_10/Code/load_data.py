@@ -12,7 +12,7 @@ from datetime import datetime
 import logging
 
 from Models import Rental, Bike, Station, Base
-import app
+import utils
 from create_database import create_db
 
 def try_to_add_object(obj, session):
@@ -55,7 +55,7 @@ def load_file(data_dir_path: str, file_name: str, db_engine: Engine):
             next(data)
             for i, row in enumerate(data):
                add_row(row, session)
-               app.print_loading_progress(i+1, number_of_rows-1)
+               utils.print_loading_progress(i+1, number_of_rows-1)
 
 if __name__ == "__main__":
 
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         log_level = (os.environ.get('LOG_LEVEL')) if os.environ.get('LOG_LEVEL', '') != '' else None
         if log_level is None:
             log_level = 'WARNING'
-        app.set_logger(logging.getLogger('sqlalchemy.engine'), log_level)
+        utils.set_logger(logging.getLogger('sqlalchemy.engine'), log_level)
         # db_engine = create_engine(f"sqlite:///{db_name}.db", echo=False)
         # Base.metadata.create_all(db_engine)
         db_engine = create_db(db_name, False)

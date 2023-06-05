@@ -1,12 +1,16 @@
 import sys
+import os
+import utils
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox
 from PySide6.QtCore import Qt
 from sqlalchemy import create_engine, select, func
 from sqlalchemy.orm import sessionmaker
 from Models import Base, Rental, Station
 
+db_name = 'rentals'
+db_path = os.environ.get('DB_PATH') + db_name + '.db'
 # Connect to the database
-engine = create_engine("sqlite:///rentals.db")
+engine = create_engine(f"sqlite:///{db_path}")
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -24,7 +28,7 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(self.central_widget)
         
         # Adding a widget to chose the station
-        self.station_label = QLabel("Wybierz stację:")
+        self.station_label = QLabel("Wybierz stację nr 1:")
         layout.addWidget(self.station_label)
 
         # Adding a combo box to chose the station with list of all stations
@@ -33,27 +37,31 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.stations)
 
         # Button for ex 3a
-        self.rental_duration_button = QPushButton("Sredni czas trwania przejazdu rozpoczynanego na tej stacji")
+        self.rental_duration_button = QPushButton("Sredni czas trwania przejazdu rozpoczynanego na stacji nr 1")
         self.rental_duration_button.clicked.connect(self.avg_rental)
         layout.addWidget(self.rental_duration_button)
 
         # Button for ex 3b
-        self.return_duration_button = QPushButton("Średni czas trwania przejazdu kończonego na tej stacji")
+        self.return_duration_button = QPushButton("Średni czas trwania przejazdu kończonego na stacji nr 1")
         self.return_duration_button.clicked.connect(self.avg_return)
         layout.addWidget(self.return_duration_button)
 
         # Button for ex 3c
-        self.bikes_count_button = QPushButton("Liczba różnych rowerów parkowanych na tej stacji")
+        self.bikes_count_button = QPushButton("Liczba różnych rowerów parkowanych na stacji nr 1")
         self.bikes_count_button.clicked.connect(self.calculate_bikes_count)
         layout.addWidget(self.bikes_count_button)
         
+        # Adding a widget to chose the station
+        self.station_label = QLabel("Wybierz stację nr 2:")
+        layout.addWidget(self.station_label)
+
         # Adding a combo box to chose the end station with list of all stations
         self.stations_end = QComboBox()
         self.add_stations(self.stations_end)
         layout.addWidget(self.stations_end)
         
         # Button for ex 3d
-        self.trip_count_button = QPushButton("Liczba przejazdów z jednej stacji do drugiej")
+        self.trip_count_button = QPushButton("Liczba przejazdów ze stacji nr 1 do stacji nr 2")
         self.trip_count_button.clicked.connect(self.calculate_trip_count)
         layout.addWidget(self.trip_count_button)
 
@@ -73,7 +81,7 @@ class MainWindow(QMainWindow):
         selects = select(func.avg(Rental.duration)).where(Rental.rental_station_id == station_id)
         avg_duration = session.execute(selects).scalar()
 
-        message = f"Średni czas trwania przejazdu rozpoczynanego na tej stacji {station_name}: {avg_duration:.2f}"
+        message = f"Średni czas trwania przejazdu rozpoczynanego na stacji {station_name}: {avg_duration:.2f}"
 
         QMessageBox.information(self, "Wyniki", message)
 
@@ -88,7 +96,7 @@ class MainWindow(QMainWindow):
         selects = select(func.avg(Rental.duration)).where(Rental.return_station_id == station_id)
         avg_duration = session.execute(selects).scalar()
 
-        message = f"Średni czas trwania przejazdu kończonego na tej stacji {station_name}: {avg_duration:.2f}"
+        message = f"Średni czas trwania przejazdu kończonego na stacji {station_name}: {avg_duration:.2f}"
 
         QMessageBox.information(self, "Wyniki", message)
 
@@ -103,7 +111,7 @@ class MainWindow(QMainWindow):
         selects = select(func.count(Rental.bike_number.distinct())).where(Rental.rental_station_id == station_id or Rental.return_station_id == station_id)
         bikes_count = session.execute(selects).scalar()
 
-        message = f"Liczba różnych rowerów parkowanych na tej stacji {station_name}: {bikes_count}"
+        message = f"Liczba różnych rowerów parkowanych na stacji {station_name}: {bikes_count}"
 
         QMessageBox.information(self, "Wyniki", message)
         
@@ -124,7 +132,7 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Błąd", "Wybrano dwie takie same stacje.")
             return
 
-        message = f"Liczba przejazdów z stacji {start_station_name} do stacji {end_station_name}: {trip_count}"
+        message = f"Liczba przejazdów z(e) stacji {start_station_name} do stacji {end_station_name}: {trip_count}"
 
         QMessageBox.information(self, "Wyniki", message)
 
