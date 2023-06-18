@@ -1,0 +1,6 @@
+.scrollable-list {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
