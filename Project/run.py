@@ -1,5 +1,5 @@
 from flask import Flask
-from View import example
+from view import example
 
 def create_app():
     app = Flask(__name__)
@@ -8,4 +8,4 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    create_app().run()
+    create_app().run(port=int('5000'), debug=True)

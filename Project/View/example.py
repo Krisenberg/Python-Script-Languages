@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template
-from Model import test
+from model import test
 
 # app = Flask(__name__)
 
@@ -7,7 +7,7 @@ example_blueprint = Blueprint('example_blueprint', __name__)
 
 @example_blueprint.route('/')
 def index():
-    return render_template('layout.html', css_path='Styling\\main_page.css', player='Model\\test.py')
+    return render_template('index.html', css_path='static\\css\\main_page.css', player='model\\test.py')
 
 @example_blueprint.route('/play', methods=['POST'])
 def play_music():
