@@ -3,13 +3,13 @@
 <div class="menu">
     <h1>Choose a strategy for the playlist creator</h1>
     <form action="/strategy_picker" method="POST">
-        <input type="radio" id="strategy1" name="options" value="strategy1">
-        <label for="strategy1">Mix najpopularniejszych utworów z podanych lat</label><br>
+        <input type="radio" id="strategy1" name="options" value="strategy1" class="radio-option">
+        <label for="strategy1">Mix of the most popular songs from selected years</label><br>
 
-        <input type="radio" id="strategy2" name="options" value="strategy2">
-        <label for="strategy2">Miejsce na kolejną strategię</label><br>
+        <input type="radio" id="strategy2" name="options" value="strategy2" class="radio-option">
+        <label for="strategy2">Next strategy option</label><br>
 
-        <button type="submit" value="Submit">Wybierz</button>
+        <button type="submit" value="Submit">Confirm</button>
     </form>
 </div>
 {% endblock content %}

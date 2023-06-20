@@ -8,9 +8,7 @@ client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-token = spotipy.prompt_for_user_token(client_id, client_secret)
-# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-sp = spotipy.Spotify(auth=token)
+sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
 def get_top_data(year, type, limit, market):
@@ -35,6 +33,9 @@ def create_playlist_from_top_tracks(year_start, year_end, limit, market):
     playlist_link = playlist['external_urls']['spotify']
 
     return playlist_link
+
+print(get_top_data(2022, 'track', 1, 'PL'))
+
 
 # # Example usage
 # for year in range(2021, 2022):
