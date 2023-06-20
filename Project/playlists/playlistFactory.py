@@ -1,5 +1,5 @@
 import abc
-from playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded
+from playlists.playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded
 
 class PlaylistFactory(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -24,13 +24,13 @@ class PlaylistFactoryAdded(PlaylistFactory):
     
 class PlaylistFactoryManager:
     @staticmethod
-    def create_playlist_generator(scope, username):
-        creator = PlaylistFactoryManager.get_creator()
+    def create_playlist_generator(scope, username, type='added'):
+        creator = PlaylistFactoryManager.get_creator(type)
         return creator.create_playlist_generator(scope, username)
     
     @staticmethod
-    def get_creator():
-        type = input("What type of playlist do you want to create? ")
+    def get_creator(type):
+        type = type.lower()
         creator_dict = PlaylistFactoryManager.get_creator_dict()
         for key, value in creator_dict.items():
             if key == type:
