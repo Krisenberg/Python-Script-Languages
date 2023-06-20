@@ -25,16 +25,16 @@ def spotify_playlist():
 
 @main.route('/strategy_picker', methods=['POST'])
 def strategy_picker():
-    strategy_func_dict = {
-            'strategy1' : strategy1,
-            'strategy2' : None
-        }
+    # strategy_func_dict = {
+    #         'strategy1' : strategy1,
+    #         'strategy2' : None
+    #     }
 
     # selected_option = strategy_func_dict[request.form.get('options')]
     input = request.form.get('options')
     return render_template(f'{input}.html', css_path='static\\css\\main_page.css')
 
-@main.route('/strategy1', methods=['POST'])
+@main.route('/strategy1', methods=['GET','POST'])
 def strategy1():
 
     start_year = request.form.get('start_year')
@@ -42,10 +42,28 @@ def strategy1():
     limit = request.form.get('limit')
     market = request.form.getlist('market')
 
-    playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
+    if not start_year or not end_year or not limit or not market:
+        error_message = 'Please provide required data.'
+        return render_template('strategy1.html', start_year=start_year, end_year=end_year,
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
+
+    if int(start_year) > int(end_year):
+        error_message = 'Start year cannot be larger than end year.'
+        return render_template('strategy1.html', start_year=start_year, end_year=end_year,
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
+    
+    if int(limit)<=0:
+        error_message = 'Limit must be a positive integer.'
+        return render_template('strategy1.html', start_year=start_year, end_year=end_year,
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
+
+    #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
+    playlist = "Dupa jasiu maryna"
+    return render_template(f'strategy1.html', playlist=playlist, start_year=start_year, end_year=end_year,
+                           limit=limit, market=market, css_path='static\\css\\main_page.css')
     
     # Return a response or redirect as needed
-    return render_template('contact.html', playlist_link=playlist, css_path='static\\css\\main_page.css')
+    # return render_template('contact.html', playlist_link=playlist, css_path='static\\css\\main_page.css')
 
 # @main.route('/play', methods=['POST'])
 # def play_music():
