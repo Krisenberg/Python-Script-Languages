@@ -1,5 +1,4 @@
 {% extends "layout.html" %}
-{% extends "layout.html" %}
 {% block content %}
 <div class="strategy1">
     <form action="/strategy1" method="POST">
@@ -16,7 +15,6 @@
         <input type="number" id="limit" name="limit" required value="{{ limit or '10' }}"><br>
     
         <h4>Wybierz kraj:</h4>
-        <input type="checkbox" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
         <input type="checkbox" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
         <label for="market-poland">Poland</label><br>
     
