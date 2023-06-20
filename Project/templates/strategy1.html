@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% extends "layout.html" %}
 {% block content %}
 <div class="strategy1">
     <form action="/strategy1" method="POST">
@@ -16,6 +17,7 @@
     
         <h4>Wybierz kraj:</h4>
         <input type="checkbox" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
+        <input type="checkbox" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
         <label for="market-poland">Poland</label><br>
     
         <input type="checkbox" id="market_usa" name="market" value="USA"{% if 'USA' in market %}checked{% endif %}>
@@ -23,9 +25,20 @@
     
         <input type="checkbox" id="market_uk" name="market" value="UK"{% if 'UK' in market %}checked{% endif %}>
         <label for="market-uk">UK</label><br>
-    
+
         <button type="submit" id="generate_button">Stwórz playlistę</button>
     </form>
+    {% if playlist %}
+        <div class="playlist-link">
+            <h2>Generated Playlist:</h2>
+            <a href="{{ playlist }}" target="_blank">{{ playlist }}</a>
+        </div>
+    {% endif %}
+    {% if error_message %}
+        <div class="error-message">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
     {% if playlist %}
         <div class="playlist-link">
             <h2>Generated Playlist:</h2>
