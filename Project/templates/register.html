@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="register_content">
+    <div class="content-section">
         <form method="POST" action="">
-            {{ form.hidden_tag()}}
+            {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="mb-4">Registration</legend>
                 {% for field in [form.username, form.password, form.confirm_password] %}

@@ -161,6 +161,10 @@ button{
   cursor: pointer;
 }
 
+.alert{
+  color: #fff;
+}
+
 .menu{
   margin-left: 60px;
   margin-top: 50px;
@@ -328,3 +332,7 @@ button{
     border: 1px solid #ccc;
     padding: 5px;
   }
+
+body{
+  color: #fff !important;
+}

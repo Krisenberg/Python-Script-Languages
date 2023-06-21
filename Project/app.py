@@ -13,9 +13,6 @@ login_manager = LoginManager()
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
 
-from view import routes
-from view import users_routes
-
 def create_app():
 
     # create the app
@@ -32,11 +29,14 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
-    login_manager.init_app(app)
+    login_manager.init_app(app)   
 
     db.create_all()
 
-    app.register_blueprint(routes.main)
-    app.register_blueprint(users_routes.users)
+    from view.routes import main
+    from view.users_routes import users
+
+    app.register_blueprint(main)
+    app.register_blueprint(users)
 
     return app
