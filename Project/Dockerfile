@@ -1,4 +1,4 @@
-FROM python:3-alpine3.11
+FROM python:3-alpine3.15
 WORKDIR /playme
 COPY . /playme/
 RUN pip install -r requirements.txt

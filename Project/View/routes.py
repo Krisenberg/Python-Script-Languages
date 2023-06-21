@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @main.route('/home')
 def home():
-    return render_template('home.html', css_path='static\\css\\main_page.css', player='model\\test.py')
+    return render_template('home.html', css_path='static\\css\\main_page.css')
 
 @main.route('/about')
 def about():
