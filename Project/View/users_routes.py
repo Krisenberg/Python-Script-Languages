@@ -47,10 +47,6 @@ def login(*args):
             login_user(user=user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash('You are now logged in', category="success")
-            # return (
-            #     redirect(next_page) if next_page
-            #     else redirect(url_for('main.home'))
-            # )
             return (
                 redirect(url_for('users.account'))
             )
@@ -95,7 +91,4 @@ def account(*args):
         'account.html',
         form=form,
         css_path='static\\css\\main_page.css'
-        # cameras=(Camera.query.all()
-        #          if current_user.is_premium
-        #          else Camera.query.filter_by(is_premium=False).all())
         )

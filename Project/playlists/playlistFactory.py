@@ -1,5 +1,5 @@
 import abc
-from playlists.playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded
+from playlists.playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded, PlaylistArtists
 
 class PlaylistFactory(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -22,6 +22,10 @@ class PlaylistFactoryAdded(PlaylistFactory):
     def create_playlist_generator(self, scope, username):
         return PlaylistAdded(scope, username)
     
+class PlaylistFactoryArtists(PlaylistFactory):
+    def create_playlist_generator(self, scope, username):
+        return PlaylistArtists(scope, username)
+    
 class PlaylistFactoryManager:
     @staticmethod
     def create_playlist_generator(scope, username, type='added'):
@@ -39,6 +43,6 @@ class PlaylistFactoryManager:
     
     @staticmethod
     def get_creator_dict():
-        types = ['genres', 'years', 'recommendations', 'added']
-        creators = [PlayistFactoryGenres(), PlaylistFactoryYears(), PlaylistFactoryRecommendations(), PlaylistFactoryAdded()]
+        types = ['genres', 'years', 'recommendations', 'added', 'artists']
+        creators = [PlayistFactoryGenres(), PlaylistFactoryYears(), PlaylistFactoryRecommendations(), PlaylistFactoryAdded(), PlaylistFactoryArtists()]
         return dict(zip(types, creators))

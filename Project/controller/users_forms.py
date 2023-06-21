@@ -36,17 +36,3 @@ class UpdateAccountForm(FlaskForm):
     client_secret = StringField('Client Secret', validators=[DataRequired()])
     client_name = StringField('Client Name', validators=[DataRequired()])
     submit = SubmitField('Update')
-
-    # def __init__(self, *args, **kwargs):
-    #     super(UpdateAccountForm, self).__init__(*args, **kwargs)
-    #     self
-        # self.favorite_cameras.choices = [
-        #     (camera.id, camera.title) for camera in Camera.query.all()
-        # ]
-
-    # def validate_username(self, username):
-    #     if username.data != current_user.username:
-    #         user = User.query.filter_by(username=username.data).first()
-    #         if user:
-    #             raise ValidationError('This username is already taken. '
-    #                                   'Please choose another one.')
