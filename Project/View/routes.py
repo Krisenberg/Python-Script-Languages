@@ -65,7 +65,7 @@ def strategy1():
 
     playlist_generator = playlistFactory.PlaylistFactoryManager.create_playlist_generator(scope, username, type='years')
     playlist_generator.create_playlist(playlist_name, playlist_description)
-    playlist_generator.add_tracks(playlist_generator.get_tracks(start_year, end_year, limit))
+    playlist_generator.add_tracks(playlist_generator.get_tracks(start_year, end_year, limit, market))
     
     return render_template(f'strategy1.html', playlist=str(playlist_generator.get_link()), start_year=start_year, end_year=end_year,
                            limit=limit, market=market, css_path='static\\css\\main_page.css')
@@ -86,11 +86,46 @@ def strategy2():
 
     playlist_generator = playlistFactory.PlaylistFactoryManager.create_playlist_generator(scope, username, type='genres')
     playlist_generator.create_playlist(playlist_name, playlist_description)
-    playlist_generator.add_tracks(playlist_generator.get_tracks(genre, limit))
+    playlist_generator.add_tracks(playlist_generator.get_tracks(genre, limit, market))
     
     return render_template(f'strategy2.html', playlist=str(playlist_generator.get_link()), genre=genre, 
                            limit=limit, market=market, css_path='static\\css\\main_page.css')
     
+@main.route('/strategy3', methods=['GET','POST'])
+def strategy3():
+
+    limit = request.form.get('limit')
+    market = request.form.getlist('market')
+    playlist_name = request.form.get('playlist_name')
+    playlist_description = request.form.get('playlist_description')
+
+    #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
+
+    playlist_generator = playlistFactory.PlaylistFactoryManager.create_playlist_generator(scope, username, type='recommendations')
+    playlist_generator.create_playlist(playlist_name, playlist_description)
+    playlist_generator.add_tracks(playlist_generator.get_tracks(limit, market))
+    
+    return render_template(f'strategy3.html', playlist=str(playlist_generator.get_link()),
+                           limit=limit, market=market, css_path='static\\css\\main_page.css')
+
+@main.route('/strategy4', methods=['GET','POST'])
+def strategy4():
+
+    artists = [request.form.get('artist1'), request.form.get('artist2'), request.form.get('artist3'), request.form.get('artist4'), request.form.get('artist5')]
+    artists = [artist for artist in artists if artist != '']
+    limit = request.form.get('limit')
+    market = request.form.getlist('market')
+    playlist_name = request.form.get('playlist_name')
+    playlist_description = request.form.get('playlist_description')
+
+    #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
+
+    playlist_generator = playlistFactory.PlaylistFactoryManager.create_playlist_generator(scope, username, type='artists')
+    playlist_generator.create_playlist(playlist_name, playlist_description)
+    playlist_generator.add_tracks(playlist_generator.get_tracks(artists, limit, market))
+    
+    return render_template(f'strategy4.html', playlist=str(playlist_generator.get_link()),
+                           limit=limit, market=market, css_path='static\\css\\main_page.css')
 
 # @main.route('/play', methods=['POST'])
 # def play_music():

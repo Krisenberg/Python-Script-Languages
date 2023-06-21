@@ -1,22 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="strategy2">
-    <form action="/strategy2" method="POST">
-        <h1>Chose your favorite music genres:</h1>
-        <input type="checkbox" id="genre_pop" name="genre" value="pop"{% if 'pop' in genre %}checked{% endif %}>
-        <label for="genre-pop">Pop</label><br>
-
-        <input type="checkbox" id="genre_rock" name="genre" value="rock"{% if 'rock' in genre %}checked{% endif %}>
-        <label for="genre-rock">Rock</label><br>
-
-        <input type="checkbox" id="genre_rap" name="genre" value="rap"{% if 'rap' in genre %}checked{% endif %}>
-        <label for="genre-rap">Rap</label><br>
-
-        <input type="checkbox" id="genre_classical" name="genre" value="classical"{% if 'classical' in genre %}checked{% endif %}>
-        <label for="genre-classical">Classical</label><br>
-
-        <input type="checkbox" id="genre_jazz" name="genre" value="jazz"{% if 'jazz' in genre %}checked{% endif %}>
-        <label for="genre-jazz">Jazz</label><br>
+<div class="strategy4">
+    <form action="/strategy4" method="POST">
+        
+        <h1>Type your favorite artists:</h1>
+        <label for="artist1">Artist 1:</label>
+        <input type="text" id="artist1" name="artist1" value="{{ artist1 or '' }}"><br>
+        <label for="artist2">Artist 2:</label>
+        <input type="text" id="artist2" name="artist2" value="{{ artist2 or '' }}"><br>
+        <label for="artist3">Artist 3:</label>
+        <input type="text" id="artist3" name="artist3" value="{{ artist3 or '' }}"><br>
+        <label for="artist4">Artist 4:</label>
+        <input type="text" id="artist4" name="artist4" value="{{ artist4 or '' }}"><br>
+        <label for="artist5">Artist 5:</label>
+        <input type="text" id="artist5" name="artist5" value="{{ artist5 or '' }}"><br>
 
         <h2>How many songs do you want in your playlist?</h2>
         <label for="limit">Limit:</label>
