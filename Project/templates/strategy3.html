@@ -2,40 +2,29 @@
 {% block content %}
 <div class="strategy3">
     <form action="/strategy3" method="POST">
-
-        <h2>Wprowadź limit utworów pobieranych z każdego roku</h2>
+    
+        <h1>How many songs do you want in your playlist?</h2>
         <label for="limit">Limit:</label>
         <input type="number" id="limit" name="limit" required value="{{ limit or '10' }}"><br>
     
-        <h3>Wybierz kraj:</h3>
-        <input type="checkbox" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
-        <label for="market-poland">Poland</label><br>
+        <h2>Chose the target country (your country is default):</h3>
+        <input type="radio" id="market_poland" name="market" value="PL"{% if 'PL' in market %}checked{% endif %}>
+        <label for="market-poland">PL</label><br>
 
-        <input type="checkbox" id="market_usa" name="market" value="USA"{% if 'USA' in market %}checked{% endif %}>
-        <label for="market-usa">USA</label><br>
+        <input type="radio" id="market_usa" name="market" value="US"{% if 'US' in market %}checked{% endif %}>
+        <label for="market-usa">US</label><br>
     
-        <input type="checkbox" id="market_uk" name="market" value="UK"{% if 'UK' in market %}checked{% endif %}>
-        <label for="market-uk">UK</label><br>
+        <input type="radio" id="market_uk" name="market" value="GB"{% if 'GB' in market %}checked{% endif %}>
+        <label for="market-uk">GB</label><br>
 
-        <h4>Nazwa playlisty:</h4>
+        <h3>Your playlist name:</h4>
         <input type="text" id="playlist_name" name="playlist_name" required value="{{ playlist_name or 'NewPlaylist' }}"><br>
 
-        <h5>Opis playlisty:</h5>
+        <h4>Your playlist description:</h5>
         <input type="text" id="playlist_description" name="playlist_description" required value="{{ playlist_description or 'Playlist created by PlayMe' }}"><br>
 
         <button type="submit" id="generate_button">Stwórz playlistę</button>
     </form>
-    {% if playlist %}
-        <div class="playlist-link">
-            <h2>Generated Playlist:</h2>
-            <a href="{{ playlist }}" target="_blank">{{ playlist }}</a>
-        </div>
-    {% endif %}
-    {% if error_message %}
-        <div class="error-message">
-            <p>{{ error_message }}</p>
-        </div>
-    {% endif %}
     {% if playlist %}
         <div class="playlist-link">
             <h2>Generated Playlist:</h2>
