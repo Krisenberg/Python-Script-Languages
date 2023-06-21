@@ -76,19 +76,25 @@ def strategy1():
 @main.route('/strategy2', methods=['GET','POST'])
 def strategy2():
 
-    genre = request.form.get('genre')
+    genres = request.form.getlist('genre')
+    print(genres)
     limit = request.form.get('limit')
     market = request.form.getlist('market')
     playlist_name = request.form.get('playlist_name')
     playlist_description = request.form.get('playlist_description')
 
+    if not limit or not market or genres == []:
+        error_message = 'Please provide required data.'
+        return render_template('strategy2.html', genres = genres,
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
+
     #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
 
     playlist_generator = playlistFactory.PlaylistFactoryManager.create_playlist_generator(scope, username, type='genres')
     playlist_generator.create_playlist(playlist_name, playlist_description)
-    playlist_generator.add_tracks(playlist_generator.get_tracks(genre, limit, market))
+    playlist_generator.add_tracks(playlist_generator.get_tracks(genres, limit, market))
     
-    return render_template(f'strategy2.html', playlist=str(playlist_generator.get_link()), genre=genre, 
+    return render_template(f'strategy2.html', playlist=str(playlist_generator.get_link()), genres=genres, 
                            limit=limit, market=market, css_path='static\\css\\main_page.css')
     
 @main.route('/strategy3', methods=['GET','POST'])
@@ -98,6 +104,11 @@ def strategy3():
     market = request.form.getlist('market')
     playlist_name = request.form.get('playlist_name')
     playlist_description = request.form.get('playlist_description')
+
+    if  not limit or not market:
+        error_message = 'Please provide required data.'
+        return render_template('strategy3.html',
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
 
     #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
 
@@ -117,6 +128,11 @@ def strategy4():
     market = request.form.getlist('market')
     playlist_name = request.form.get('playlist_name')
     playlist_description = request.form.get('playlist_description')
+
+    if not limit or not market or artists == []:
+        error_message = 'Please provide required data.'
+        return render_template('strategy4.html', artists=artists,
+                           limit=limit, market=market, error_message=error_message, css_path='static\\css\\main_page.css')
 
     #playlist = spotify_controller2.create_playlist_from_top_tracks(int(start_year), int(end_year), int(limit), market)
 

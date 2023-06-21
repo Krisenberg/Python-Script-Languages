@@ -38,14 +38,14 @@ class PlaylistGenres(PlaylistGenerator):
     def create_playlist(self, playlist_name, playlist_description):
         super().create_playlist(playlist_name, playlist_description)
         
-    def get_tracks(self, genre, limit, country):
+    def get_tracks(self, genres, limit, country):
         # # get the genres
         # genres = self.spotifyObject.recommendation_genre_seeds()['genres']
         # print("What genres you want to include in your playlist?")
         # for i, genre in enumerate(genres):
         #     print(f"{i+1}. {genre}", end='\n')
         
-        seed_genres = [genre]
+        seed_genres = genres
 
         # get recommended tracks based off seed tracks
         recommended_tracks = self.spotifyObject.recommendations(seed_genres=seed_genres, limit=int(limit), market=country)['tracks']
