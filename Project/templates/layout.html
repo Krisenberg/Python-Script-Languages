@@ -10,10 +10,26 @@
         <img src="..\\static\\logo.png" class="logo">
         <ul>
           <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('users.account') }}">Account</a></li>
+            <li><a href="{{ url_for('users.logout') }}">Logout</a></li>
+          {% else %}
           <li><a href="{{ url_for('main.about') }}">About</a></li>
           <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+          <li><a href="{{ url_for('users.register') }}">Register</a></li>
+          <li><a href="{{ url_for('users.login') }}">Login</a></li>
+          {% endif %}
         </ul>
       </div>
+      {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       {% block content %}
       {% endblock %}
     </div>
