@@ -467,3 +467,4 @@ Lab_10/DBs/rentals.db
 Lab_10/Data/historia_przejazdow_2021-13.csv
 Project/.env
 .cache*
+*.db
