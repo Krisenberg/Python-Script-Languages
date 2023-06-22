@@ -29,15 +29,6 @@
                     </div>
                 {% endfor %}
             <br></fieldset>
-            <!-- <fieldset class="form-group">
-                <legend class="mb-2">Favorite Cameras</legend>
-                {% for camera in cameras %}
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="favorite_cameras" value="{{ camera.id }}" {% if camera in current_user.favorite_cameras %}checked{% endif %}>
-                        <label class="form-check-label">{{ camera.title }}</label>
-                    </div>
-                {% endfor %}
-            <br></fieldset> -->
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>

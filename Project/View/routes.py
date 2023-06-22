@@ -1,17 +1,19 @@
 from flask import Blueprint, request, render_template, url_for
 from playlists import playlistFactory
+import os
+import dotenv
 
 scope = 'playlist-modify-public user-read-recently-played'
 username = 'qmatix'
 
-# app = Flask(__name__)
+# app = Flask(_name_)
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 @main.route('/home')
 def home():
-    return render_template('home.html', css_path='static\\css\\main_page.css')
+    return render_template('home.html', css_path='static\\css\\main_page.css', player='model\\test.py')
 
 @main.route('/about')
 def about():
@@ -151,4 +153,3 @@ def strategy4():
 #     selected_songs = test.get_selected_songs(selected_genres)
 
 #     return render_template('result.html', songs=selected_songs)
-

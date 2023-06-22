@@ -1,5 +1,5 @@
 import abc
-from playlists.playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded, PlaylistArtists
+from controller.playlistGenerator import PlaylistGenres, PlaylistYears, PlaylistRecommendations, PlaylistAdded, PlaylistArtists
 
 class PlaylistFactory(metaclass=abc.ABCMeta):
     @abc.abstractmethod

@@ -226,14 +226,6 @@ button{
   font-size: 20px;
   margin-top: 20px;
 }
-.strategy1 h5{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy1 h6{
-  font-size: 20px;
-  margin-top: 20px;
-}
 
 .strategy1 button{
   margin-top: 30px;
@@ -241,7 +233,7 @@ button{
   padding: 10px 0;
   text-align: center;
   font-size: 20px;
-  margin: 20px 1px;
+  margin: 5px 5px;
   border-radius: 15px;
   font-weight: bold;
   border: 2px solid #1db954;
@@ -263,7 +255,6 @@ button{
 
 .strategy2 h1{
   font-size: 20px;
-  margin-top: 20px;
 }
 .strategy2 h2{
   font-size: 20px;
@@ -276,111 +267,6 @@ button{
 .strategy2 h4{
   font-size: 20px;
   margin-top: 20px;
-}
-.strategy2 h5{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy2 button{
-  margin-top: 30px;
-  width: 200px;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-  margin: 20px 1px;
-  border-radius: 15px;
-  font-weight: bold;
-  border: 2px solid #1db954;
-  background: #1ed760;
-  color: #000000;
-  cursor: pointer;
-}
-
-.strategy3{
-  margin-left: 60px;
-  margin-top: 150px;
-  width: 80%;
-  position: absolute;
-  top: 35%;
-  transform: translateY(-50%);
-  text-align: left;
-  color: #fff;
-}
-
-.strategy3 h1{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy3 h2{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy3 h3{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy3 h4{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy3 button{
-  margin-top: 20px;
-  width: 200px;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-  margin: 20px 1px;
-  border-radius: 15px;
-  font-weight: bold;
-  border: 2px solid #1db954;
-  background: #1ed760;
-  color: #000000;
-  cursor: pointer;
-}
-
-.strategy4{
-  margin-left: 60px;
-  margin-top: 150px;
-  width: 80%;
-  position: absolute;
-  top: 35%;
-  transform: translateY(-50%);
-  text-align: left;
-  color: #fff;
-}
-.strategy4 h1{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy4 h2{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy4 h3{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy4 h4{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy4 h5{
-  font-size: 20px;
-  margin-top: 20px;
-}
-.strategy4 button{
-  margin-top: 30px;
-  width: 200px;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-  margin: 20px 1px;
-  border-radius: 15px;
-  font-weight: bold;
-  border: 2px solid #1db954;
-  background: #1ed760;
-  color: #000000;
-  cursor: pointer;
 }
 
 .error-message p{
